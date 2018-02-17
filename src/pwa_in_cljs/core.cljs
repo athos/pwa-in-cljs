@@ -1,17 +1,18 @@
 (ns pwa-in-cljs.core
-    (:require ))
+  (:require [goog.dom :as dom]
+            [goog.events :as events]
+            [pwa-in-cljs.views :as views]
+            [reagent.core :as r]))
 
 (enable-console-print!)
 
-(println "This text is printed from src/pwa-in-cljs/core.cljs. Go ahead and edit it and see reloading in action.")
+(defonce app-state (atom {}))
 
-;; define your app data so that it doesn't get over-written on reload
+(defn mount []
+  (println "mounting ...")
+  (r/render [views/app] (dom/getElement "app")))
 
-(defonce app-state (atom {:text "Hello world!"}))
-
+(events/listen js/window "load" mount)
 
 (defn on-js-reload []
-  ;; optionally touch your app-state to force rerendering depending on
-  ;; your application
-  ;; (swap! app-state update-in [:__figwheel_counter] inc)
-)
+  (mount))
