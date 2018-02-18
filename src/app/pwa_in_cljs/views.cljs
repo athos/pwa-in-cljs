@@ -53,21 +53,19 @@
     [future]]])
 
 (defn dialog-container []
-  [:div.dialog-container
-   [:div.dialog
-    [:div.dialog-title "Add new city"]
-    [:div.dialog-body
-     [:select#selectCityToAdd
-      [:option {:value "2357536"} "Austin, TX"]
-      [:option {:value "2367105"} "Boston, MA"]
-      [:option {:value "2379574"} "Chicago, IL"]
-      [:option {:value "2459115"} "New York, NY"]
-      [:option {:value "2475687"} "Portland, OR"]
-      [:option {:value "2487956"} "San Francisco, CA"]
-      [:option {:value "2490383"} "Seattle, WA"]]]
-    [:div.dialog-buttons
-     [:button#butAddCity.button "Add"]
-     [:button#butAddCancel.button "Cancel"]]]])
+  (let [{:keys [dialog-shown?]} @data/app-state]
+    (when dialog-shown?
+      [:div.dialog-container
+       [:div.dialog
+        [:div.dialog-title "Add new city"]
+        [:div.dialog-body
+         [:select#selectCityToAdd
+          (for [[id city] data/cities]
+            ^{:key id}
+            [:option {:value id} city])]]
+        [:div.dialog-buttons
+         [:button#butAddCity.button "Add"]
+         [:button#butAddCancel.button "Cancel"]]]])))
 
 (defn loader []
   (let [{:keys [loading?]} @data/app-state]
