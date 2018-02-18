@@ -6,8 +6,6 @@
 
 (enable-console-print!)
 
-(defonce app-state (atom {}))
-
 (defn mount []
   (println "mounting ...")
   (r/render [views/app] (dom/getElement "app")))

@@ -1,6 +1,7 @@
 (ns pwa-in-cljs.views
   (:require [goog.dom :as dom]
             [goog.events :as events]
+            [pwa-in-cljs.data :as data]
             [reagent.core :as r]))
 
 (defn header []
@@ -68,8 +69,16 @@
      [:button#butAddCity.button "Add"]
      [:button#butAddCancel.button "Cancel"]]]])
 
+(defn loader []
+  (let [{:keys [loading?]} @data/app-state]
+    (when loading?
+      [:div.loader
+       [:svg {:view-box "0 0 32 32" :width 32 :height 32}
+        [:circle#spinner {:cx 16 :cy 16 :r 14 :fill :none}]]])))
+
 (defn app []
   [:div
    [header]
    [main]
-   [dialog-container]])
+   [dialog-container]
+   [loader]])
