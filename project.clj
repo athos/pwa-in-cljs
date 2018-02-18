@@ -14,11 +14,11 @@
   :plugins [[lein-figwheel "0.5.14"]
             [lein-cljsbuild "1.1.7" :exclusions [[org.clojure/clojure]]]]
 
-  :source-paths ["src"]
+  :source-paths ["src/app"]
 
   :cljsbuild {:builds
               [{:id "dev"
-                :source-paths ["src"]
+                :source-paths ["src/app"]
 
                 :figwheel {:on-jsload "pwa-in-cljs.core/on-js-reload"
                            :open-urls ["http://localhost:3449/index.html"]}
@@ -30,7 +30,7 @@
                            :source-map-timestamp true
                            :preloads [devtools.preload]}}
                {:id "min"
-                :source-paths ["src"]
+                :source-paths ["src/app"]
                 :compiler {:output-to "resources/public/js/compiled/app.js"
                            :main pwa-in-cljs.core
                            :optimizations :advanced
@@ -41,7 +41,7 @@
   :profiles {:dev {:dependencies [[binaryage/devtools "0.9.4"]
                                   [figwheel-sidecar "0.5.14"]
                                   [com.cemerick/piggieback "0.2.2"]]
-                   :source-paths ["src" "dev"]
+                   :source-paths ["src/app" "dev"]
                    ;; for CIDER
                    ;; :plugins [[cider/cider-nrepl "0.12.0"]]
                    :repl-options {:nrepl-middleware [cemerick.piggieback/wrap-cljs-repl]}
