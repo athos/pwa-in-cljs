@@ -19,3 +19,9 @@
           (when-not (contains? visible-cards key)
             (swap! data/app-state update :selected-cities conj key))
           (toggle-add-dialog false))))
+
+(defn update-forecasts []
+  (let [{:keys [selected-cities]} @data/app-state]
+    (->> selected-cities
+         (map fetch-forecast)
+         dorun)))

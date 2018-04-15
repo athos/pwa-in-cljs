@@ -19,7 +19,8 @@
 (defn header []
   [:header.header
    [:h1.header__title "Weather PWA"]
-   [:button#butRefresh.headerButton {:aria-label "Refresh"}]
+   [:button#butRefresh.headerButton
+    {:aria-label "Refresh" :on-click #(handler/update-forecasts)}]
    [:button#butAdd.headerButton
     {:aria-label "Add" :on-click #(handler/toggle-add-dialog true)}]])
 
