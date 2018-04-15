@@ -61,10 +61,11 @@
        [oneday (nth forecast i) day])]))
 
 (defn main []
-  (let [{:keys [visible-cards]} @data/app-state]
+  (let [{:keys [selected-cities visible-cards]} @data/app-state]
     [:main.main
-     (for [[_ card] visible-cards
-           :let [current (get-in card [:channel :item :condition])
+     (for [city selected-cities
+           :let [card (get visible-cards city)
+                 current (get-in card [:channel :item :condition])
                  forecast (get-in card [:channel :item :forecast])]]
        ^{:key (:key card)}
        [:div.card.weather-forecast
@@ -77,8 +78,9 @@
         [future-weather forecast]])]))
 
 (defn dialog-container []
-  (let [selected-city (r/atom nil)
-        {:keys [dialog-shown?]} @data/app-state]
+  (let [{:keys [dialog-shown? visible-cards]} @data/app-state
+        cities (remove #(contains? visible-cards (key %)) data/cities)
+        selected-city (r/atom (key (first cities)))]
     (when dialog-shown?
       [:div.dialog-container
        [:div.dialog
@@ -88,12 +90,14 @@
           {:on-change (fn [e]
                         (let [key (.. e -target -value)]
                           (reset! selected-city key)))}
-          (for [[id city] data/cities]
+          (for [[id city] cities]
             ^{:key id}
             [:option {:value id} city])]]
         [:div.dialog-buttons
          [:button#butAddCity.button
-          {:on-click #(handler/add-city @selected-city)}
+          {:on-click (fn []
+                       (when @selected-city
+                         (handler/add-city @selected-city)))}
           "Add"]
          [:button#butAddCancel.button
           {:on-click #(handler/toggle-add-dialog false)}
