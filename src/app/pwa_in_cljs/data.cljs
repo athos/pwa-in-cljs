@@ -6,6 +6,10 @@
            :dialog-shown? false
            :visible-cards {}
            :selected-cities []}))
+
+(def days-of-week
+  ["Mon" "Tue" "Wed" "Thu" "Fri" "Sat" "Sun"])
+
 (def cities
   {"2357536" "Austin, TX"
    "2367105" "Boston, MA"

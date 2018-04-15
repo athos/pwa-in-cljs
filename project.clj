@@ -9,6 +9,7 @@
   :dependencies [[org.clojure/clojure "1.9.0"]
                  [org.clojure/clojurescript "1.9.946"]
                  [org.clojure/core.async  "0.3.443"]
+                 [kitchen-async "0.1.0-SNAPSHOT"]
                  [reagent "0.8.0-alpha2"]]
 
   :plugins [[lein-figwheel "0.5.15"]
