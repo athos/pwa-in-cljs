@@ -11,7 +11,7 @@
                  [org.clojure/core.async  "0.3.443"]
                  [reagent "0.8.0-alpha2"]]
 
-  :plugins [[lein-figwheel "0.5.14"]
+  :plugins [[lein-figwheel "0.5.15"]
             [lein-cljsbuild "1.1.7" :exclusions [[org.clojure/clojure]]]]
 
   :source-paths ["src/app"]
@@ -39,7 +39,8 @@
   :figwheel {:css-dirs ["resources/public/css"] }
 
   :profiles {:dev {:dependencies [[binaryage/devtools "0.9.4"]
-                                  [figwheel-sidecar "0.5.14"]
+                                  [figwheel-sidecar "0.5.15" :exclusions [[http-kit]]]
+                                  [http-kit "2.3.0-beta2"]
                                   [com.cemerick/piggieback "0.2.2"]]
                    :source-paths ["src/app" "dev"]
                    ;; for CIDER
