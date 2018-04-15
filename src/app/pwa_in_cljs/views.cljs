@@ -86,7 +86,7 @@
        [:div.dialog
         [:div.dialog-title "Add new city"]
         [:div.dialog-body
-         [:select#selectCityToAdd
+         [:select
           {:on-change (fn [e]
                         (let [key (.. e -target -value)]
                           (reset! selected-city key)))}
@@ -94,12 +94,12 @@
             ^{:key id}
             [:option {:value id} city])]]
         [:div.dialog-buttons
-         [:button#butAddCity.button
+         [:button.button
           {:on-click (fn []
                        (when @selected-city
                          (handler/add-city @selected-city)))}
           "Add"]
-         [:button#butAddCancel.button
+         [:button.button
           {:on-click #(handler/toggle-add-dialog false)}
           "Cancel"]]]])))
 
