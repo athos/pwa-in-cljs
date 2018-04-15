@@ -14,7 +14,8 @@
       (update-forecast-card key forecast))))
 
 (defn add-city [key]
-  (p/do
-    (fetch-forecast key)
-    (swap! data/app-state update :selected-cities conj key)
-    (swap! data/app-state assoc :dialog-shown? false)))
+  (let [{:keys [visible-cards]} @data/app-state]
+    (p/do (fetch-forecast key)
+          (when-not (contains? visible-cards key)
+            (swap! data/app-state update :selected-cities conj key))
+          (toggle-add-dialog false))))
