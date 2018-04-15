@@ -2,13 +2,15 @@
   (:require [goog.dom :as dom]
             [goog.events :as events]
             [pwa-in-cljs.data :as data]
+            [pwa-in-cljs.handler :as handler]
             [reagent.core :as r]))
 
 (defn header []
   [:header.header
    [:h1.header__title "Weather PWA"]
    [:button#butRefresh.headerButton {:aria-label "Refresh"}]
-   [:button#butAdd.headerButton {:aria-label "Add"}]])
+   [:button#butAdd.headerButton
+    {:aria-label "Add" :on-click #(handler/toggle-add-dialog true)}]])
 
 (defn current []
   [:div.current
@@ -65,7 +67,9 @@
             [:option {:value id} city])]]
         [:div.dialog-buttons
          [:button#butAddCity.button "Add"]
-         [:button#butAddCancel.button "Cancel"]]]])))
+         [:button#butAddCancel.button
+          {:on-click #(handler/toggle-add-dialog false)}
+          "Cancel"]]]])))
 
 (defn loader []
   (let [{:keys [loading?]} @data/app-state]
