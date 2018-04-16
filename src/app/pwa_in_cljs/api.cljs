@@ -4,8 +4,7 @@
 (defn fetch-forecast [key label]
   (let [statement (str "select * from weather.forecast where woeid=" key)
         url (str "https://query.yahooapis.com/v1/public/yql?format=json&q=" statement)]
-    (p/let [res (js/fetch url)
-            json (.json res)]
+    (p/let [json (p/-> (js/fetch url) .json)]
       (let [results (-> (.. json -query -results)
                         (js->clj :keywordize-keys true))]
         (assoc results
