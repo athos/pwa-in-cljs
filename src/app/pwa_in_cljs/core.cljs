@@ -11,9 +11,12 @@
 (defn main []
   (println "mounting ...")
   (r/render [views/app] (dom/getElement "app"))
-  (p/let [cities (handler/load-selected-cities)]
-    (handler/update-selected-cities cities)
-    (handler/update-forecasts)))
+  (p/try
+    (p/let [cities (handler/load-selected-cities)]
+      (handler/update-selected-cities cities)
+      (p/all (handler/update-forecasts)))
+    (p/finally
+      (handler/toggle-loading false))))
 
 (events/listen js/window "load" main)
 

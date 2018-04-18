@@ -7,6 +7,10 @@
 (defn toggle-add-dialog [shown?]
   (swap! data/app-state assoc :dialog-shown? shown?))
 
+
+(defn toggle-loading [shown?]
+  (swap! data/app-state assoc :loading? shown?))
+
 (defn save-selected-cities []
   (let [{:keys [selected-cities]} @data/app-state
         serialized (pr-str selected-cities)]
@@ -41,4 +45,4 @@
   (let [{:keys [selected-cities]} @data/app-state]
     (->> selected-cities
          (map fetch-forecast)
-         dorun)))
+         doall)))
