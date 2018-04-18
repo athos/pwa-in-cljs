@@ -65,8 +65,9 @@
   (let [{:keys [selected-cities visible-cards]} @data/app-state]
     [:main.main
      (for [city selected-cities
-           :let [card (get visible-cards city)
-                 current (get-in card [:channel :item :condition])
+           :let [card (get visible-cards city)]
+           :when card
+           :let [current (get-in card [:channel :item :condition])
                  forecast (get-in card [:channel :item :forecast])]]
        ^{:key (:key card)}
        [:div.card.weather-forecast
@@ -80,6 +81,7 @@
 
 (defn dialog-container []
   (let [{:keys [dialog-shown? visible-cards]} @data/app-state
+        visible-cards (or visible-cards {})
         cities (remove #(contains? visible-cards (key %)) data/cities)
         selected-city (r/atom (key (first cities)))]
     (when dialog-shown?
