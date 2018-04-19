@@ -16,7 +16,11 @@
       (handler/update-selected-cities cities)
       (p/all (handler/update-forecasts)))
     (p/finally
-      (handler/toggle-loading false))))
+      (handler/toggle-loading false)))
+  (when (exists? (.-serviceWorker js/navigator))
+    (p/do
+      (.. js/navigator -serviceWorker (register "/sw.js"))
+      (println "Service worker registered"))))
 
 (events/listen js/window "load" main)
 
