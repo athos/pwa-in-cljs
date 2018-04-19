@@ -20,10 +20,8 @@
   :cljsbuild {:builds
               [{:id "dev"
                 :source-paths ["src/app"]
-
                 :figwheel {:on-jsload "pwa-in-cljs.core/on-js-reload"
                            :open-urls ["http://localhost:3449/index.html"]}
-
                 :compiler {:main pwa-in-cljs.core
                            :asset-path "js/compiled/out"
                            :output-to "resources/public/js/compiled/app.js"
@@ -35,10 +33,17 @@
                 :compiler {:output-to "resources/public/js/compiled/app.js"
                            :main pwa-in-cljs.core
                            :optimizations :advanced
-                           :pretty-print false}}]}
+                           :pretty-print false}}
+
+               {:id "sw-dev"
+                :source-paths ["src/worker"]
+                :compiler {:main pwa-in-cljs.service-worker
+                           :output-to "resources/public/js/compiled/sw.js"
+                           :optimizations :whitespace
+                           :pretty-print true
+                           :language-in :es-2015}}]}
 
   :figwheel {:css-dirs ["resources/public/css"] }
-
   :profiles {:dev {:dependencies [[binaryage/devtools "0.9.4"]
                                   [figwheel-sidecar "0.5.15" :exclusions [[http-kit]]]
                                   [http-kit "2.3.0-beta2"]
