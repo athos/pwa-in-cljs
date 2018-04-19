@@ -38,10 +38,11 @@
                {:id "sw-dev"
                 :source-paths ["src/worker"]
                 :compiler {:main pwa-in-cljs.service-worker
-                           :output-to "resources/public/js/compiled/sw.js"
+                           :output-to "resources/public/sw.js"
+                           :output-dir "target/js/sw"
                            :optimizations :whitespace
                            :pretty-print true
-                           :language-in :es-2015}}]}
+                           :language-in :ecmascript6}}]}
 
   :figwheel {:css-dirs ["resources/public/css"] }
   :profiles {:dev {:dependencies [[binaryage/devtools "0.9.4"]
@@ -53,4 +54,5 @@
                    ;; :plugins [[cider/cider-nrepl "0.12.0"]]
                    :repl-options {:nrepl-middleware [cemerick.piggieback/wrap-cljs-repl]}
                    :clean-targets ^{:protect false} ["resources/public/js/compiled"
+                                                     "resources/public/sw.js"
                                                      :target-path]}})
